@@ -14,7 +14,6 @@ You can convert these images with dcm2niix and estimate tensors using FSL's [dti
 git clone https://github.com/neurolabusc/dcm_qa_sag
 cd dcm_qa_sag
 ./batch.sh
-python dtirev.py ./Out
 python dtifits.py ./Out
 ```
 The correct solution should be observed by opening up the derived V1 data (typically as an overlay on the derived FA) with FSLeyes and using the [lines vector view](https://open.win.ox.ac.uk/pages/fsl/fsleyes/fsleyes/userdoc/overlays.html#vector).
