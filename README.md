@@ -20,7 +20,7 @@ The correct solution should be observed by opening up the derived V1 data (typic
 
 ![DWI](4_DWI_SagAPmosaic.png)
 
-## Replication Slice Times
+## Validation of Slice Times
 
 Estimating slice timing when converting DICOMs to NIfTI is challenging due to three complexities:
  1. For Sagittal images, the slice direction is left-right (x). However, [DICOM](https://dicom.innolitics.com/ciods/rt-dose/image-plane/00200032) defines the x-axis is increasing to the left side of the patient. The reverse is true with [NIfTI](https://nifti.nimh.nih.gov/pub/dist/src/niftilib/nifti1.h): `DICOM +Xd is Left` while for NIfTI `+x is Right`.
