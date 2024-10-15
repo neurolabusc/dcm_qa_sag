@@ -97,9 +97,69 @@ When we use fslhd we see that dcm2niix has stored slices in the order Left-to-ri
 		0	],
 ```
 
+### XA30 Slice Timing Validation (enhanced DICOM, one 3D volume per file)
+
+
+The DICOM header reveals the first images were acquired before (75813.91) and to the right (-68.2) or the last instance (63) of the volume (time 75815.3175 and position 68.2). Hence the slices were temporally acquired right to left (though note multiband, so this right-to-left is repeated).
+
+```bash
+$dcmdump +P 0018,9074 +P 0020,0032 ./In/XA30/enhanced/5_Product_EPI_Sag_Ascending/0063.dcm
+(0018,9074) DT [20241015075813.910000]                  #  22, 1 FrameAcquisitionDateTime
+...
+(0018,9074) DT [20241015075815.317500]                  #  22, 1 FrameAcquisitionDateTime
+(0020,0032) DS [-68.2\-96\96]                           #  12, 3 ImagePositionPatient
+...
+(0020,0032) DS [68.2\-96\96]                            #  12, 3 ImagePositionPatient
+$fslhd ./Out/5_Product_EPI_Sag_Ascending
+...
+sform_zorient	Left-to-Right
+```
+
+We can see that fslhd reveals that the NIfTI volume is saved with left slices ordered before right slices. The BIDS JSON file suggests the first slices saved to disk (left) were acquired later than the last slice (right). Hence the slices are reported as temporally acquired from right to left.
+
+```json
+	"SliceTiming": [
+		1.41,
+		1.34,
+		1.2675,
+		1.1975,
+...
+		0	],
+```
+
+
+### XA30 Slice Timing Validation (classic DICOM, one 2D image per file)
+
+The series 500x_Product_EPI_Sag_Ascending provides classic DICOMs from an XA30 scanner. The DICOM header reveals the first instance (1) was acquired before (75813.91) and to the right (-68.2) or the last instance (63) of the volume (time 75815.3175 and position 68.2). Hence the slices were temporally acquired right to left. Note that the first volume of this series incorrectly populates the private DICOM tag TimeAfterStart (0021,1104) with single-band values, while subsequent volumes correctly report the multi-band times. This reflects an error in the source DICOM images.
+
+
+```bash
+$dcmdump +P 0008,0032 +P 0020,0013 +P 0020,0032 ./In/XA30/classic/5001_Product_EPI_Sag_Ascending/5001001.dcm 
+(0008,0032) TM [075813.910000]                          #  14, 1 AcquisitionTime
+(0020,0013) IS [1]                                      #   2, 1 InstanceNumber
+(0020,0032) DS [-68.2\-96\96]                           #  12, 3 ImagePositionPatient
+
+$dcmdump +P 0008,0032 +P 0020,0013 +P 0020,0032 ./In/XA30/classic/5001_Product_EPI_Sag_Ascending/5001063.dcm
+(0008,0032) TM [075815.317500]                          #  14, 1 AcquisitionTime
+(0020,0013) IS [63]                                     #   2, 1 InstanceNumber
+(0020,0032) DS [68.2\-96\96]                            #  12, 3 ImagePositionPatient
+$fslhd ./Out/5001_Product_EPI_Sag_Ascending
+sform_zorient	Left-to-Right
+```
+
+Note fslhd reveals that the NIfTI volume is saved with left slices ordered before right slices. The BIDS JSON file suggests the first slices saved to disk (left) were acquired later than the last slice (right). Hence the slices are reported as temporally acquired from right to left.
+
+```json
+	"SliceTiming": [
+		4.22,
+		4.1525,
+...
+		0	],
+```
+
 ## DataSets
 
-Data is provided for six series, all acquired on a 3T Siemens Prisma runnig VE11C software.
+VE11 Data is provided for six series, all acquired on a 3T Siemens Prisma running VE11C software (courtesy Chris Rorden):
 
  - 2_fmri_SagAP : sagittal function MRI with anterior-posterior phase encoding (stored as mosaic)
  - 3_fmri_SagHF : sagittal functional MRI with head-foot phase encoding (stored as mosaic)
@@ -107,3 +167,11 @@ Data is provided for six series, all acquired on a 3T Siemens Prisma runnig VE11
  - 5_DWI_SagHFmosaic : sagittal diffusion MRI with head-foot phase encoding (stored as mosaic)
  - 6_DWI_SagAPsagittal diffusion MRI with anterior-posterior phase encoding (stored as 2D slices)
  - 7_DWI_SagHF : sagittal diffusion MRI with head-foot phase encoding (stored as 2D slices)
+
+XA30 Data is provided as both enhanced and classic DICOM, all acquired on a 3T Siemens Prisma running XA30A software (courtesy Jeffrey Luci):
+ - 5_Product_EPI_Sag_Ascending: sagittal ascending enhanced
+ - 6_Product_EPI_Sag_Interleaved: sagittal interleaved enhanced
+ - 500x_Product_EPI_Sag_Ascending: sagittal ascending classic
+ - 600x_Product_EPI_Sag_Interleaved: sagittal interleaved classic
+
+
