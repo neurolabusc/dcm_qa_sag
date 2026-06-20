@@ -19,9 +19,10 @@
 	"ProtocolName": "fmri_SagAP",
 	"ScanningSequence": "EP",
 	"SequenceVariant": "SK",
+	"PulseSequenceType": "Gradient Echo EPI",
 	"ScanOptions": "FS",
 	"SequenceName": "*epfid2d1_64",
-	"ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "MOSAIC"],
+	"ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "MOSAIC", "MAGNITUDE"],
 	"NonlinearGradientCorrection": false,
 	"SeriesNumber": 2,
 	"AcquisitionTime": "13:41:48.717500",
@@ -36,7 +37,6 @@
 	"EchoTime": 0.03,
 	"RepetitionTime": 3.2,
 	"FlipAngle": 90,
-	"PartialFourier": 1,
 	"BaseResolution": 64,
 	"ShimSetting": [
 		6783,
@@ -65,6 +65,7 @@
 	"ReconMatrixPE": 64,
 	"BandwidthPerPixelPhaseEncode": 48.077,
 	"ParallelReductionFactorInPlane": 2,
+	"ParallelReductionFactorOutOfPlane": 1,
 	"EffectiveEchoSpacing": 0.000324999,
 	"DerivedVendorReportedEchoSpacing": 0.000649999,
 	"TotalReadoutTime": 0.020475,
@@ -119,5 +120,5 @@
 	"InPlanePhaseEncodingDirectionDICOM": "ROW",
 	"BidsGuess": ["func","_acq-epfid2p2_dir-RL_run-2_bold"],
 	"ConversionSoftware": "dcm2niix",
-	"ConversionSoftwareVersion": "v1.0.20241004"
+	"ConversionSoftwareVersion": "v1.0.20260620"
 }
