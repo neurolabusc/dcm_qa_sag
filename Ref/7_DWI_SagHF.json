@@ -25,7 +25,7 @@
 	"ImageType": ["ORIGINAL", "PRIMARY", "DIFFUSION", "NONE", "ND"],
 	"NonlinearGradientCorrection": false,
 	"SeriesNumber": 7,
-	"AcquisitionTime": "13:50:22.002500",
+	"AcquisitionTime": "13:50:19.807500",
 	"AcquisitionNumber": 1,
 	"ImageComments": "SENSE1",
 	"SliceThickness": 2.7,
@@ -134,5 +134,5 @@
 	"InPlanePhaseEncodingDirectionDICOM": "COL",
 	"BidsGuess": ["dwi","_acq-epb0_dir-AP_run-7_dwi"],
 	"ConversionSoftware": "dcm2niix",
-	"ConversionSoftwareVersion": "v1.0.20260819"
+	"ConversionSoftwareVersion": "v1.0.20260915"
 }
